@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Results - KDP Book Formatter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>KDP Book Formatter</h1>
+            <p class="subtitle">Processing Complete</p>
+        </header>
+
+        <div class="results-section">
+            <div class="success-message">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <h2>Manuscript Formatted Successfully!</h2>
+            </div>
+
+            <div class="book-info">
+                <h3>Book Details</h3>
+                <ul>
+                    <li><strong>Title:</strong> {{ result.title }}</li>
+                    <li><strong>Author:</strong> {{ result.author }}</li>
+                    <li><strong>Trim Size:</strong> {{ result.trim_size }}</li>
+                    <li><strong>Print Mode:</strong> {{ 'Yes' if result.print_mode else 'No' }}</li>
+                </ul>
+            </div>
+
+            <div class="download-section">
+                <h3>Download Files</h3>
+                
+                <a href="{{ url_for('download', file_type='docx') }}" class="download-btn docx-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download DOCX
+                    <span class="file-name-small">{{ result.docx_filename }}</span>
+                </a>
+
+                {% if result.pdf_path %}
+                <a href="{{ url_for('download', file_type='pdf') }}" class="download-btn pdf-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download PDF
+                    <span class="file-name-small">{{ result.pdf_filename }}</span>
+                </a>
+                {% elif result.pdf_error %}
+                <div class="pdf-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <p>PDF generation failed: {{ result.pdf_error }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if result.dpi_warnings %}
+            <div class="warnings-section">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Image DPI Warnings
+                </h3>
+                <p class="warning-intro">The following images have a DPI lower than 300, which may result in blurry prints:</p>
+                
+                <div class="warnings-list">
+                    {% for warning in result.dpi_warnings %}
+                    <div class="warning-item">
+                        <div class="warning-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                        </div>
+                        <div class="warning-details">
+                            <strong>{{ warning.image }}</strong>
+                            <p>{{ warning.message }}</p>
+                            {% if warning.width and warning.height %}
+                            <span class="dimensions">Dimensions: {{ warning.width }} × {{ warning.height }} px</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="toc-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <p><strong>Note:</strong> When you open the document in Microsoft Word, right-click on the Table of Contents and select "Update Field" to generate page numbers.</p>
+            </div>
+
+            <a href="{{ url_for('index') }}" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Format Another Manuscript
+            </a>
+        </div>
+
+        <footer>
+            <p>Formats manuscripts according to Amazon KDP guidelines with proper margins, fonts, and styling.</p>
+        </footer>
+    </div>
+</body>
+</html>

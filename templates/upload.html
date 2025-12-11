@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDP Book Formatter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>KDP Book Formatter</h1>
+            <p class="subtitle">Format your manuscript for Amazon Kindle Direct Publishing</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('process') }}" method="POST" enctype="multipart/form-data" id="upload-form">
+            <div class="form-section">
+                <h2>Upload Manuscript</h2>
+                
+                <div class="drop-zone" id="drop-zone">
+                    <div class="drop-zone-content">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p>Drag & drop your .docx file here</p>
+                        <p class="or-text">or</p>
+                        <label class="file-select-btn">
+                            Browse Files
+                            <input type="file" name="file" id="file-input" accept=".docx" required>
+                        </label>
+                    </div>
+                    <p class="file-name" id="file-name"></p>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Book Details</h2>
+                
+                <div class="form-group">
+                    <label for="title">Book Title</label>
+                    <input type="text" id="title" name="title" placeholder="Enter your book title" value="Untitled">
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author Name</label>
+                    <input type="text" id="author" name="author" placeholder="Enter author name" value="Author Name">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Formatting Options</h2>
+                
+                <div class="form-group">
+                    <label for="trim_size">Trim Size</label>
+                    <select id="trim_size" name="trim_size">
+                        <option value="6x9" selected>6" × 9" (Most Popular)</option>
+                        <option value="5x8">5" × 8" (Compact)</option>
+                        <option value="8.5x11">8.5" × 11" (Large)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="line_spacing">Line Spacing</label>
+                    <select id="line_spacing" name="line_spacing">
+                        <option value="1.15" selected>1.15 (Tight)</option>
+                        <option value="1.25">1.25 (Normal)</option>
+                        <option value="1.5">1.5 (Relaxed)</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="print_mode" id="print_mode">
+                        <span class="checkmark"></span>
+                        Print Book Mode (Mirrored Margins)
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group" id="pdf-option" style="display: none;">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="generate_pdf" id="generate_pdf">
+                        <span class="checkmark"></span>
+                        Also Generate PDF for Print
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                Format Manuscript
+            </button>
+        </form>
+
+        <footer>
+            <p>Formats manuscripts according to Amazon KDP guidelines with proper margins, fonts, and styling.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
