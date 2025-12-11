@@ -1,0 +1,237 @@
+📘 PROJECT REQUEST: Build a Full “KDP Book Formatter” Web App in Python + Flask
+
+I want you to create a complete, production-quality KDP Book Formatter Web App using Python + Flask.
+
+✔ This app must include ALL of the following features:
+⭐ CORE FUNCTIONALITY
+1️⃣ Upload & Processing
+
+Upload a .docx manuscript.
+
+Drag-and-drop uploader.
+
+Dark mode UI.
+
+2️⃣ Automatic Formatting Rules (according to KDP guidelines)
+Apply KDP-standard formatting to the manuscript:
+
+Trim sizes selectable: 6×9, 5×8, 8.5×11.
+
+Page setup:
+
+Top & Bottom: 1"
+
+Inside: 0.85"
+
+Outside: 0.6"
+
+Mirrored margins when “Print Book Mode” is selected.
+
+Body text:
+
+Font: Georgia
+
+Size: 11 pt
+
+Line spacing: 1.15–1.5
+
+Paragraph spacing after: 6 pt
+
+First-line indentation: 0.25”
+
+Chapter formatting:
+
+All “Heading 1” paragraphs are treated as chapter titles.
+
+Insert page break before each Heading 1.
+
+Center-align chapter titles.
+
+Cleanup:
+
+Remove extra spaces.
+
+Remove tabs.
+
+Remove manual multiple line breaks.
+
+⭐ ADVANCED FEATURES
+3️⃣ Automatic TOC Generation
+
+Insert a Word-compatible dynamic TOC using Word’s fields.
+
+Must render correctly when the user opens the file in Word.
+
+4️⃣ Front Matter Templates
+
+Before the manuscript content, insert:
+
+Title Page
+
+Big centered title text.
+
+Author name below it.
+
+Copyright Page
+
+Standard copyright notice.
+
+Dedication Page
+
+Centered line: “For someone special…”
+
+Each section should start on a new page.
+
+⭐ ADDITIONAL TOOLS
+5️⃣ Inline Image DPI Checker
+
+Inspect every image embedded in the DOCX.
+
+Generate warnings if DPI < 300.
+
+Display warnings after file processing.
+
+6️⃣ PDF Exporter for Print Books
+
+Provide a function to convert the resulting DOCX to a PDF:
+
+First try using docx2pdf.
+
+If not available, fall back to LibreOffice headless CLI.
+
+Output file should be:
+PRINT_<uuid>.pdf
+
+⭐ USER INTERFACE
+7️⃣ Drag-and-Drop File Upload UI
+
+A drop zone that highlights on dragover.
+
+Automatically fills file input on drop.
+
+8️⃣ Dark Mode UI Styling
+
+Use CSS to create:
+
+Dark gray background
+
+White text
+
+Blue highlight colors
+
+Styled inputs & buttons
+
+Styled drag-and-drop box
+
+⭐ TEMPLATES REQUIRED
+HTML:
+
+upload.html
+Contains the uploader, form for trim size, print-mode checkbox.
+
+CSS:
+
+style.css
+Must include:
+
+Dark mode styles
+
+Drag-and-drop box styling
+
+JS:
+
+script.js
+Handles drag-and-drop logic.
+
+⭐ BACKEND FILES REQUIRED
+app.py
+
+Flask web server with:
+
+"/" for upload page
+
+"/process" for formatting & returning results
+
+/services folder containing:
+
+formatter.py
+
+Main formatting logic
+
+Chapter detection
+
+Page setup
+
+TOC insertion
+
+Style normalization
+
+Calls frontmatter & DPI checker
+
+frontmatter.py
+
+Inserts title, copyright, dedication pages
+
+dpi_checker.py
+
+PIL-based DPI scanner
+
+pdf_exporter.py
+
+docx → pdf conversion function
+
+⭐ FINAL APP REQUIREMENTS
+
+After the user submits the form:
+
+The .docx is processed.
+
+It is reformatted according to KDP standards.
+
+Front matter is added.
+
+A dynamic table of contents is created.
+
+Images are scanned for DPI issues.
+
+The formatted DOCX is returned for download.
+
+PDF option is available if print mode was selected.
+
+DPI warnings are shown on a result page.
+
+⭐ OTHER REQUIREMENTS
+
+All code must be fully functional.
+
+The app must be runnable on Replit without modification.
+
+The app must include a replit.nix or requirements.txt with dependencies:
+
+flask
+
+python-docx
+
+Pillow
+
+docx2pdf
+
+pypdf or similar if needed
+
+Ensure compatibility with Replit’s Linux environment (LibreOffice CLI fallback).
+
+⛳ Goal
+
+Deliver a complete, professional-grade KDP Book Formatter Web App, ready for use by authors to clean up and format their manuscripts before uploading to Amazon KDP.
+
+📍 OUTPUT FORMAT
+
+Provide:
+
+Full project structure
+
+Every file with complete code
+
+Instructions to run on Replit
+
+END OF PROMPT
