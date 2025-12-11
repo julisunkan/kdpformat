@@ -5,7 +5,7 @@ A Flask-based tool for formatting manuscripts according to Amazon KDP standards.
 
 import os
 import uuid
-from flask import Flask, render_template, request, send_file, redirect, url_for, flash, session
+from flask import Flask, render_template, request, send_file, redirect, url_for, flash, session, make_response, send_from_directory
 from werkzeug.utils import secure_filename
 
 from services.formatter import format_manuscript
@@ -31,6 +31,28 @@ def allowed_file(filename):
 def index():
     """Display the upload page."""
     return render_template('upload.html')
+
+
+@app.route('/manifest.json')
+def serve_manifest():
+    """Serve PWA manifest."""
+    return send_from_directory('static', 'manifest.json', mimetype='application/manifest+json')
+
+
+@app.route('/sw.js')
+def serve_sw():
+    """Serve service worker with proper headers."""
+    response = make_response(send_from_directory('static', 'sw.js'))
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Service-Worker-Allowed'] = '/'
+    response.headers['Content-Type'] = 'application/javascript'
+    return response
+
+
+@app.route('/offline')
+def offline():
+    """Serve offline page."""
+    return render_template('offline.html')
 
 
 @app.route('/process', methods=['POST'])

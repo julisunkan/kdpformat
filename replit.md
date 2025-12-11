@@ -1,10 +1,10 @@
 # KDP Book Formatter
 
-A professional-grade web application for formatting manuscripts according to Amazon Kindle Direct Publishing (KDP) standards.
+A professional-grade Progressive Web App (PWA) for formatting manuscripts according to Amazon Kindle Direct Publishing (KDP) standards.
 
 ## Overview
 
-This Flask-based application helps authors prepare their manuscripts for publishing on Amazon KDP by:
+This Flask-based PWA helps authors prepare their manuscripts for publishing on Amazon KDP by:
 - Applying proper formatting (margins, fonts, spacing)
 - Generating front matter (title page, copyright, dedication)
 - Creating a Word-compatible table of contents
@@ -23,12 +23,23 @@ This Flask-based application helps authors prepare their manuscripts for publish
 │   └── pdf_exporter.py    # DOCX to PDF conversion
 ├── templates/
 │   ├── upload.html        # File upload interface
-│   └── results.html       # Processing results page
+│   ├── results.html       # Processing results page
+│   └── offline.html       # PWA offline page
 ├── static/
 │   ├── style.css          # Dark mode styling
-│   └── script.js          # Drag-and-drop functionality
+│   ├── script.js          # Drag-and-drop functionality
+│   ├── manifest.json      # PWA manifest
+│   ├── sw.js              # Service worker
+│   └── icons/             # PWA icons (72-512px, standard & maskable)
 └── uploads/               # Temporary file storage
 ```
+
+## PWA Features
+
+- **Installable**: Can be installed on desktop and mobile devices
+- **Offline support**: Shows offline page when no internet connection
+- **App-like experience**: Standalone display mode without browser chrome
+- **Icons**: Multiple sizes including maskable icons for Android
 
 ## Features
 
