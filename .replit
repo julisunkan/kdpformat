@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["freetype", "lcms2", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "tcl", "tk", "xcodebuild", "zlib", "libreoffice"]
+packages = ["freetype", "lcms2", "libimagequant", "libjpeg", "libreoffice", "libtiff", "libwebp", "libxcrypt", "openjpeg", "tcl", "tk", "xcodebuild", "zlib"]
 
 [workflows]
 runButton = "Project"
